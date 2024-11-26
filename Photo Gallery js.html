@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie interactive</title>
+    <style>
+        #image {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 300px;
+            background-color: #f4f4f4;
+            margin-bottom: 20px;
+        }
+
+        .preview {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="image">Hover over an image below to display here</div>
+
+    <div class="preview">
+        <img src="https://via.placeholder.com/300" alt="Image 1" data-src="https://via.placeholder.com/300">
+    </div>
+    <div class="preview">
+        <img src="https://via.placeholder.com/300/FF0000" alt="Image 2" data-src="https://via.placeholder.com/300/FF0000">
+    </div>
+    <div class="preview">
+        <img src="https://via.placeholder.com/300/00FF00" alt="Image 3" data-src="https://via.placeholder.com/300/00FF00">
+    </div>
+
+    <script>
+        function upDate(previewPic) {
+            // Sélectionnez la div avec l'identifiant image
+            const imageDiv = document.getElementById('image');
+
+            // Modifiez l'image d'arrière-plan avec la source de l'image survolée
+            imageDiv.style.backgroundImage = `url(${previewPic.getAttribute('data-src')})`;
+
+            // Modifiez le texte pour refléter la valeur de l'attribut alt
+            imageDiv.textContent = previewPic.alt;
+        }
+
+        function unDo() {
+            // Sélectionnez la div avec l'identifiant image
+            const imageDiv = document.getElementById('image');
+
+            // Remettez l'image d'arrière-plan à vide
+            imageDiv.style.backgroundImage = '';
+
+            // Remettez le texte original
+            imageDiv.textContent = 'Hover over an image below to display here';
+        }
+
+        // Ajout des écouteurs d'événements pour toutes les images de prévisualisation
+        const previewImages = document.querySelectorAll('.preview img');
+
+        previewImages.forEach(image => {
+            image.addEventListener('mouseover', function () {
+                upDate(this);
+            });
+
+            image.addEventListener('mouseout', function () {
+                unDo();
+            });
+        });
+    </script>
+</body>
+</html>
